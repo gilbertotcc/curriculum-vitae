@@ -1,0 +1,60 @@
+\documentclass[11pt,a4paper,sans]{moderncv}
+
+% moderncv themes
+\moderncvstyle{banking}
+\moderncvcolor{black}
+
+%\nopagenumbers{} % uncomment to suppress automatic page numbering for CVs longer than one page
+
+% adjust the page margins
+\usepackage[scale=0.80]{geometry}
+\setlength{\hintscolumnwidth}{3.5cm} % if you want to change the width of the column with the dates
+
+\usepackage{subscript}
+\usepackage{lmodern}
+
+\usepackage{etoolbox}
+\patchcmd{\makehead}
+  {0.8\textwidth}
+  {\textwidth}
+  {}{}
+
+\usepackage{xparse}
+
+\usepackage{catchfile}
+\newcommand{\getenv}[2][]{%
+  \CatchFileEdef{\temp}{"|kpsewhich --var-value #2"}{\endlinechar=-1}%
+  \if\relax\detokenize{#1}\relax\temp\else\let#1\temp\fi
+}
+
+% Fix infinite loop that caused "Tex capacity exceeded, sorry! [input stack size= 5000]"
+\renewcommand{\emaillink}[1]{#1}
+
+\name{Gilberto}{Taccari}
+
+\mobile{\getenv{CV_MOBILE}}
+\email{\getenv{CV_EMAIL}}
+\social[twitter]{GilbertoTCC}
+\social[github]{gilbertotcc}
+
+\begin{document}
+
+\makecvtitle
+
+\input{sec-personal-information}
+
+\input{sec-work-experience}
+
+\input{sec-education}
+
+\input{sec-languages}
+
+\input{sec-skills-technical}
+
+\input{sec-skills-soft}
+
+\nocite{*}
+\bibliographystyle{plainyr-rev}
+\bibliography{publications}	% 'publications' is the name of a BibTeX file
+
+\end{document}
