@@ -24,7 +24,7 @@ working LaTeX environment on local machine is not required. Instead, Docker is n
 For compiling LaTeX files and create the curriculum vitae in PDF format, following commands have to
 be ran from repository root directory. (These commands work on _macOS_ and _GNU/Linux_.)
 
-```bash
+```sh
 $ docker build --rm --tag local/latexmk:latest .
 $ docker run --rm \
     --env-file <ENVIRONMENT_FILE> \
@@ -43,10 +43,6 @@ format locally if a working LaTeX environment is configured and working. `Makefi
 [`latexmk`](http://personal.psu.edu/jcc8//software/latexmk-jcc/) to properly compile sources files.
 To create the PDF file with curriculum vitae, following command has to be called from command line.
 
-```bash
+```sh
 $ make
 ```
-
-_Repository icon made by [itim2101](https://www.flaticon.com/authors/itim2101) from
-[www.flaticon.com](https://www.flaticon.com/) is licensed by
-[CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)._
