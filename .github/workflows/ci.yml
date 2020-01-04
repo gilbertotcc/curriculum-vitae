@@ -1,0 +1,36 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Set up Git repository
+        uses: actions/checkout@v1
+
+      - name: Compile LaTeX curriculum vitae
+        uses: xu-cheng/latex-action@master
+        env:
+          CV_MOBILE: ${{ secrets.CV_MOBILE }}
+          CV_EMAIL: ${{ secrets.CV_EMAIL }}
+          CV_ADDRESS: ${{ secrets.CV_ADDRESS }}
+          CV_BIRTH: ${{ secrets.CV_BIRTH }}
+        with:
+          root_file: cv.tex
+          args: -pdf
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Send PDF using transferwee
+        run: |
+          git clone https://github.com/iamleot/transferwee.git
+          pip install requests
+          python ./transferwee/transferwee.py upload \
+            -m "New curriculum vitae created" \
+            -f ${{ secrets.CV_EMAIL }} -t ${{ secrets.CV_EMAIL }} -- \
+            cv.pdf > /dev/null
